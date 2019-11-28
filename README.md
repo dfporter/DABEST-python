@@ -1,4 +1,29 @@
 # DABEST-Python
+
+## DFPorter alteration:
+
+The python DABEST implementation failed for multiple group paired tests when Nan was present.
+
+This fixes that by two small edits:
+Added to line 152 in plot_tools.py:
+```python
+import pandas
+for col in [x for x in data.columns if x!='group']:
+    data[col] = pandas.to_numeric(data[col])
+ ```
+
+Added to _classes.py line 503:
+```python
+import numpy as np
+control = array(control, dtype=np.float64)
+test    = array(test, dtype=np.float64)
+```
+
+This fork was made just to keep track of these modifications.
+I have not tested this repo because I made the modifications to the pip installed version.
+
+## End DFPorter alterations.
+
 [![Travis CI build status](https://travis-ci.org/ACCLAB/DABEST-python.svg?branch=master)](https://travis-ci.org/ACCLAB/DABEST-python)
 [![minimal Python version](https://img.shields.io/badge/Python%3E%3D-3.5-6666ff.svg)](https://www.anaconda.com/distribution/)
 [![PyPI version](https://badge.fury.io/py/dabest.svg)](https://badge.fury.io/py/dabest)

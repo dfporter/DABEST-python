@@ -6,7 +6,7 @@
 
 
 from .misc_tools import merge_two_dicts
-
+import pandas
 
 
 def halfviolin(v, half='right', fill_color='k', alpha=1,
@@ -148,6 +148,9 @@ def gapped_lines(data, x, y, type='mean_sd', offset=0.2, ax=None,
         group_order = pd.unique(data[x]).categories
     else:
         group_order = pd.unique(data[x])
+
+    for col in [x for x in data.columns if x!='group']:
+        data[col] = pandas.to_numeric(data[col])
 
     means    = data.groupby(x)[y].mean().reindex(index=group_order)
     sd       = data.groupby(x)[y].std().reindex(index=group_order)
